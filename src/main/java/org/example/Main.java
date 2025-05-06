@@ -1,38 +1,35 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String nomeInformado, sexo, contExec="S";
+        String listaDeNomesString;
         List<String> nomesMasculinos = new ArrayList<>();
         List<String> nomesFemininos = new ArrayList<>();
 
-        while (contExec.equalsIgnoreCase("S")){
-            System.out.print("Informe o nome: ");
-            nomeInformado = scanner.nextLine();
-            System.out.print("Informe o sexo (F/M): ");
-            sexo = scanner.next();
-            scanner.nextLine();
+        System.out.print("Informe a lista de nomes e seus gêneros (Ex: Nome1 - M, Nome2 - F): ");
+        listaDeNomesString = scanner.nextLine();
 
-            if (sexo.equalsIgnoreCase("F")){
-                nomesFemininos.add(nomeInformado);
-            } else if (sexo.equalsIgnoreCase("M")){
-                nomesMasculinos.add(nomeInformado);
+        String[] listaDeNomes = listaDeNomesString.split(",");
+
+        for(String nome: listaDeNomes){
+            String[] nomeGenero = nome.split("-");
+
+            if (nomeGenero[1].trim().equalsIgnoreCase("F")){
+                nomesFemininos.add(nomeGenero[0].trim());
+            } else if (nomeGenero[1].trim().equalsIgnoreCase("M")){
+                nomesMasculinos.add(nomeGenero[0].trim());
             } else {
                 System.out.println("Não foi possível identificar o sexo informado.");
             }
-
-            System.out.print("Deseja informar um novo nome? (S/N)");
-            contExec = scanner.next();
-            scanner.nextLine();
-            System.out.println();
         }
 
-        System.out.println("Nomes masculinos: " + nomesMasculinos);
+        Collections.sort(nomesFemininos);
+        Collections.sort(nomesMasculinos);
+
+        System.out.println("Nomes Masculinos: " + nomesMasculinos);
         System.out.println("Nomes Femininos: " + nomesFemininos);
     }
 }
